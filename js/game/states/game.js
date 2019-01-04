@@ -5,32 +5,31 @@ AcquaRush.Game = {
     var count;
     var sharkvelocity;
     var bubblevelocity;
+    var energy;
+    var distance
     },
 
 
     create: function() {
         
-        this.sharkvelocity = -200;
+        this.sharkvelocity = -500;
         this.bubblevelocity = -400;
- 
+        console.log(this.energy,"eccolo");
+        this.energy = 20;
+        this.distance = 0;
         
-      
-        console.log(this.scoreText,"asdasd  ");
-            
-        console.log(this.score,"eccolo");
-        this.score = 20;
+        
         this.background = game.add.tileSprite(0, 0, game.width, game.height - 1, 'background');
         this.background.autoScroll(-20, -0);
-        
-            
         this.jumpSound = game.add.audio('jump');
         this.timer1 = game.time.events.loop(1000, this.addBubble, this);
         this.timer2 = game.time.events.loop(5000, this.changeGravity, this);
-        this.timer3 = game.time.events.loop(10000, this.changeVelocity, this);
+        //this.timer3 = game.time.events.loop(10000, this.changeVelocity, this);
         this.timer4 = game.time.events.loop(5000, this.addStarBubble, this);
         this.timer5 = game.time.events.loop(10000, this.destroyBubble, this);
         this.timer6 = game.time.events.loop(1000, this.addShark, this);
         this.timer7 = game.time.events.loop(2000, this.addOctopus, this);
+        this.timer8 = game.time.events.loop(1000, this.getDistance, this)
 
 
         //    this.timer = game.time.event.loop(15000, this.changeDirection, this);
@@ -56,8 +55,8 @@ AcquaRush.Game = {
         game.physics.arcade.enable(this.fish);
             
         let style = { font: "2rem Roboto", fill: "#FFFFFF", align: "center" };
-        this.scoreText = game.add.text(10, 10, 'SCORE:' + this.score , style);
-
+        this.scoreEnergy = game.add.text(10, 10, 'ENERGY:' + this.energy , style);
+        this.scoreDistance = game.add.text(200, 10, 'DISTANCE:' + this.distance, style)
 
         this.fish.body.gravity.y = 900;
 
@@ -66,14 +65,17 @@ AcquaRush.Game = {
     },
 
     update: function() {
-        this.scoreText.destroy();
         let style = { font: "2rem Roboto", fill: "#FFFFFF", align: "center" };
-        this.scoreText = game.add.text(10, 10, 'SCORE:' + this.score , style);
+            
+        this.scoreEnergy.destroy();
+        this.scoreDistance.destroy();
+        this.scoreEnergy = game.add.text(10, 10, 'ENERGY:' + this.energy , style);
+        this.scoreDistance = game.add.text(10, 30, 'DISTANCE:' + this.distance , style);
         if (this.fish.angle < 20){
             this.fish.angle += 1;}
         if (this.fish.y < 0 || this.fish.y > 490){
             this.restartGame();}
-        if(this.score < 0){
+        if(this.energy < 0){
             this.fish.alive = false;}
         game.physics.arcade.overlap(this.bubbles, this.fish, this.getBubble, null, this);
         game.physics.arcade.overlap(this.bubbleStars, this.fish, this.getBubbleStar, null, this);
@@ -130,7 +132,7 @@ AcquaRush.Game = {
     },
     
     addOctopus: function(x,y){
-        let maxMinScale = (Math.random() * (1.2 - 0.9) + 0.9).toFixed(10);
+        let maxMinScale = (Math.random() * (1.2 - 0.9) + 0.9    ).toFixed(10);
         let maxMinGravity = Math.random() * 20 - 10; 
         x = this.game.width + 100;
         y = Math.random()*450;
@@ -155,7 +157,7 @@ AcquaRush.Game = {
     getBubble: function(bird, bubble) {
         this.pop.play();
         bubble.destroy();
-        this.score++;
+        this.energy++;
         
     },
     
@@ -163,14 +165,19 @@ AcquaRush.Game = {
         console.log("asdasd  preso");
         this.pop.play();
         bubbleStar.destroy();
-        this.score+=10;
+        this.energy+=10;
+    },
+    
+    getDistance: function(){
+        console.log(this.distance, "distanza")
+        this.distance++
     },
 
     
     
     sharksGetBird: function(bird, sharkSprite){
         if(!sharkSprite.HasEaten){     
-        this.score-=5; 
+        this.energy-=5; 
         this.argh.play();
         sharkSprite.HasEaten = true;
         }},
