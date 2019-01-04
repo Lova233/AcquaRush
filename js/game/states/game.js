@@ -74,10 +74,9 @@ AcquaRush.Game = {
         this.fish.body.gravity.y = 900;
 
         var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        var tap =  game.input.onTap.add(this.jump, this)     
         spaceKey.onDown.add(this.jump, this);
-        game.input.onTap.add(function() {
-        this.jump();
-    });
+        
     },
 
     update: function() {
@@ -195,7 +194,7 @@ AcquaRush.Game = {
     getBubbleStar: function(bird, bubbleStar) {
         if ((this.energy+10) > this.maxEnergy){
         this.pop.play();
-        bubble.destroy();
+        bubbleStar.destroy();
         this.energy = 100;
         }
         else{
