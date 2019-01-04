@@ -168,29 +168,16 @@ AcquaRush.Game = {
 
 
     getBubble: function(bird, bubble) {
-        if ((this.energy+3) > this.maxEnergy){
         this.pop.play();
         bubble.destroy();
-        this.energy = 100;
-        }else{
-        this.pop.play();
-        bubble.destroy();
-        this.energy+=3;
-        }
+        this.energy+=15 ;
     },
     
     getBubbleStar: function(bird, bubbleStar) {
-        if ((this.energy+10) > this.maxEnergy){
         this.pop.play();
         bubbleStar.destroy();
-        this.energy = 100;
-        }
-        else{
-        this.pop.play();
-        bubbleStar.destroy();
-        this.energy+=10;
-        }
-        },
+        this.energy+=40;
+    },
     
     getDistance: function(){
     },
