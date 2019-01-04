@@ -75,6 +75,9 @@ AcquaRush.Game = {
 
         var spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         spaceKey.onDown.add(this.jump, this);
+        game.input.onTap.add(function() {
+        this.jump();
+    });
     },
 
     update: function() {
@@ -227,7 +230,6 @@ AcquaRush.Game = {
 
 
     jump: function() {
-        console.log(this.fish.alive,"è vivo?")
         if (this.fish.alive == false)
         return;
         this.fish.body.velocity.y = -350;
