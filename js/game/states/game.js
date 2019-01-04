@@ -6,17 +6,26 @@ AcquaRush.Game = {
     var sharkvelocity;
     var bubblevelocity;
     var energy;
-    var distance
+    var distance;
+    var maxEnergy;
     },
 
 
     create: function() {
         
+        
+        game.scores = {
+            distance: 0,
+        }
+        
+        
+        
+        this.maxEnergy = 100;
         this.sharkvelocity = -500;
         this.bubblevelocity = -400;
         console.log(this.energy,"eccolo");
-        this.energy = 10;
-        this.distance = 0;
+        this.energy = 99;
+
         
         
         this.background = game.add.tileSprite(0, 0, game.width, game.height - 1, 'background');
@@ -71,7 +80,7 @@ AcquaRush.Game = {
         this.scoreEnergy.destroy();
         this.scoreDistance.destroy();
         this.scoreEnergy = game.add.text(10, 10, 'ENERGY:' + this.energy , style);
-        this.scoreDistance = game.add.text(200, 10, 'DISTANCE:' + this.distance , style);
+        this.scoreDistance = game.add.text(200, 10, 'DISTANCE:' + game.scores.distance , style);
         if (this.fish.angle < 20){
             this.fish.angle += 1;}
         if (this.fish.y < 0 || this.fish.y > 490){
@@ -167,22 +176,41 @@ AcquaRush.Game = {
 
 
     getBubble: function(bird, bubble) {
+        if ((this.energy+3) > this.maxEnergy){
         this.pop.play();
         bubble.destroy();
-        this.energy+=5;
-        
+        this.energy = 100;
+        }else{
+        this.pop.play();
+        bubble.destroy();
+        this.energy+=3;
+        }
     },
     
     getBubbleStar: function(bird, bubbleStar) {
-        console.log("asdasd  preso");
+        if ((this.energy+10) > this.maxEnergy){
+        this.pop.play();
+        bubble.destroy();
+        this.energy = 100;
+        }
+        else{
         this.pop.play();
         bubbleStar.destroy();
-        this.energy+=20;
-    },
+        this.energy+=10;
+        }
+        },
     
     getDistance: function(){
-        console.log(this.distance, "distanza")
+        if(this.energy > 0 && this.energy < 30){
         this.distance++
+        };
+        if(this.energy > 30 && this.energy < 60){
+        this.distance += 2
+        };
+        if(this.energy > 60 && this.energy < 100){
+        this.distance += 3     
+        };
+        
     },
 
     
@@ -208,7 +236,8 @@ AcquaRush.Game = {
 
     // Restart the game
     restartGame: function() {
-    this.state.start('GameOver');
+    this.state.start('GameOver',true, false, this.distance);
+
     },
 
 
