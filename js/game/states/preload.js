@@ -18,9 +18,8 @@ AcquaRush.PreLoad = {
         if (this.game.device.desktop && !this.game.device.firefox)
         game.load.spritesheet('sharkSprite', 'assets/sharkSprite.png', 423, 163, 10);   
         else
-        game.load.spritesheet('sharkSprite', 'assets/sharkSprite.png', 202, 79, 10);   
-            
-            
+        game.load.spritesheet('sharkSprite', 'assets/sharkSpriteSmall.png', 202, 79, 10);   
+
         this.load.onLoadComplete.add(this.onLoadComplete, this);
 
     },
