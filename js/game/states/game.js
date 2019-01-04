@@ -24,7 +24,7 @@ AcquaRush.Game = {
         this.sharkvelocity = -500;
         this.bubblevelocity = -400;
         console.log(this.energy,"eccolo");
-        this.energy = 99;
+        this.energy = 10;
 
         
         
@@ -57,11 +57,13 @@ AcquaRush.Game = {
         this.under = game.add.audio('under'); 
         this.under.play();
 
-        this.fish = game.add.sprite(100, 245, 'bird');
+        this.fish = game.add.sprite(100, 245, 'jelly');
         this.fish.alive = true;
-            
         this.fish.anchor.setTo(-0.2, 0.5);
-        this.fish.scale.setTo(0.06, 0.06);
+        this.fish.scale.setTo(0.2, 0.2);
+        var swim = this.fish.animations.add('swim');
+        this.fish.animations.play('swim', 5, true);
+
 
         game.physics.arcade.enable(this.fish);
             
@@ -202,13 +204,13 @@ AcquaRush.Game = {
     
     getDistance: function(){
         if(this.energy > 0 && this.energy < 30){
-        this.distance++
+        this.game.scores.distance++
         };
         if(this.energy > 30 && this.energy < 60){
-        this.distance += 2
+         this.game.scores.distance += 2
         };
         if(this.energy > 60 && this.energy < 100){
-        this.distance += 3     
+         this.game.scores.distance += 3     
         };
         
     },

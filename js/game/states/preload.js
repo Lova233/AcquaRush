@@ -1,8 +1,8 @@
 AcquaRush.PreLoad = {
-    preload: function() {
+        preload: function() {
         this.ready = false;  
         game.load.image('title', 'assets/welcomeTitle.png');
-        game.load.image('bird', 'assets/bird.png');
+        game.load.spritesheet('jelly', 'assets/jelly.png',280, 312,4);
         game.load.image('shark', 'assets/sharky.png');
         game.load.image('bubble', 'assets/bubble.png');
         game.load.image('bubbleStar', 'assets/bubbleStar.png');

@@ -1,6 +1,6 @@
 AcquaRush.GameOver = {
     create: function() {
-        
+        console.log(game,"il giuco")
         let style = { font: "2rem Roboto", fill: "#FFFFFF", align: "center" };
         this.background = game.add.tileSprite(0, 0, game.width, game.height - 1, 'background');
         this.background.autoScroll(-30, -0);
@@ -27,8 +27,5 @@ AcquaRush.GameOver = {
 
 },
     update: function() {
-   
-    },
-    init: function(distance){}
 
 }
