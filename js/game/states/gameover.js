@@ -25,7 +25,4 @@ AcquaRush.GameOver = {
         newGame: function(){
         this.state.start('Game');
 
-},
-    update: function() {
-
-}
+}};
