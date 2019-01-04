@@ -15,12 +15,14 @@ AcquaRush.Game = {
         this.sharkvelocity = -500;
         this.bubblevelocity = -400;
         console.log(this.energy,"eccolo");
-        this.energy = 20;
+        this.energy = 10;
         this.distance = 0;
         
         
         this.background = game.add.tileSprite(0, 0, game.width, game.height - 1, 'background');
         this.background.autoScroll(-20, -0);
+        
+        
         this.jumpSound = game.add.audio('jump');
         this.timer1 = game.time.events.loop(1000, this.addBubble, this);
         this.timer2 = game.time.events.loop(5000, this.changeGravity, this);
@@ -66,17 +68,28 @@ AcquaRush.Game = {
 
     update: function() {
         let style = { font: "2rem Roboto", fill: "#FFFFFF", align: "center" };
-            
         this.scoreEnergy.destroy();
         this.scoreDistance.destroy();
         this.scoreEnergy = game.add.text(10, 10, 'ENERGY:' + this.energy , style);
-        this.scoreDistance = game.add.text(10, 30, 'DISTANCE:' + this.distance , style);
+        this.scoreDistance = game.add.text(200, 10, 'DISTANCE:' + this.distance , style);
         if (this.fish.angle < 20){
             this.fish.angle += 1;}
         if (this.fish.y < 0 || this.fish.y > 490){
             this.restartGame();}
         if(this.energy < 0){
             this.fish.alive = false;}
+        if(this.energy > 0 && this.energy < 30){
+            console.log("ecccoci dio cane");
+            this.background.autoScroll(-10, -0);                 
+        };
+        if(this.energy > 30 && this.energy < 60){
+            console.log("ecccoci dio cane");
+            this.background.autoScroll(-30, -0);                 
+        };
+          if(this.energy > 60 && this.energy < 100){
+            console.log("ecccoci dio cane");
+            this.background.autoScroll(-100, -0);                 
+        };
         game.physics.arcade.overlap(this.bubbles, this.fish, this.getBubble, null, this);
         game.physics.arcade.overlap(this.bubbleStars, this.fish, this.getBubbleStar, null, this);
         game.physics.arcade.overlap(this.sharks, this.fish, this.sharksGetBird, null, this);
@@ -102,7 +115,6 @@ AcquaRush.Game = {
         x = this.game.width + 100;
         y = 420 - (200 * Math.floor(Math.random() * 3));
         let bubble = game.add.sprite(x, y, 'bubble');
-       
         bubble.scale.setTo(maxMin,maxMin);
         game.physics.arcade.enableBody(bubble);
         bubble.body.gravity.y = 10; 
@@ -157,7 +169,7 @@ AcquaRush.Game = {
     getBubble: function(bird, bubble) {
         this.pop.play();
         bubble.destroy();
-        this.energy++;
+        this.energy+=5;
         
     },
     
@@ -165,7 +177,7 @@ AcquaRush.Game = {
         console.log("asdasd  preso");
         this.pop.play();
         bubbleStar.destroy();
-        this.energy+=10;
+        this.energy+=20;
     },
     
     getDistance: function(){

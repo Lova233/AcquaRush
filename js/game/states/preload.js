@@ -8,6 +8,8 @@ AcquaRush.PreLoad = {
         game.load.image('bubbleStar', 'assets/bubbleStar.png');
         game.load.image('menu', 'assets/menu.png');
         game.load.image('again', 'assets/again.png');
+        game.load.image('new', 'assets/new.png');
+        game.load.image('option', 'assets/option.png');
         game.load.spritesheet('sharkSprite', 'assets/sharkSprite.png', 423, 163, 10);   
         game.load.spritesheet('octoSprite', 'assets/octopusSprite.png', 125, 40, 3);   
         game.load.audio('pop', 'assets/sounds/pop.ogg');

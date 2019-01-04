@@ -8,11 +8,23 @@ AcquaRush.GameOver = {
         this.menu = game.add.sprite(270, 245, 'menu');
         game.add.tween(this.menu).from( { y: -200 }, 2000, Phaser.Easing.Bounce.Out, true);    
         this.scoreDistance = game.add.text(370, 100, 'DISTANCE:' + this.distance , style);
-
- 
-
- 
+        
+        this.menu.inputEnabled = true;
+        this.menu.events.onInputDown.add(this.menuStart, this);
+                
+        this.again.inputEnabled = true;
+        this.again.events.onInputDown.add(this.newGame, this);
+    
     },
+
+        menuStart: function(){
+        this.state.start('Menu');
+
+},
+        newGame: function(){
+        this.state.start('Game');
+
+},
     update: function() {
    
     }
