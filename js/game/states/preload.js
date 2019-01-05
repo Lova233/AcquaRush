@@ -4,7 +4,7 @@ AcquaRush.PreLoad = {
         game.load.image('title', 'assets/title.png');
         game.load.spritesheet('jelly', 'assets/jelly.png',280, 312,4);
         game.load.image('bubble', 'assets/bubble.png');
-        game.load.image('life', 'assets/life.png');
+        game.load.image('life', 'assets/fullLife.png');
         game.load.image('bubbleStar', 'assets/bubbleStar.png');
         game.load.image('menu', 'assets/menu.png');
         game.load.image('again', 'assets/again.png');
