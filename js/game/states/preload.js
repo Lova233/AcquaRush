@@ -12,7 +12,7 @@ AcquaRush.PreLoad = {
         game.load.image('option', 'assets/option.png');
         game.load.spritesheet('octoSprite', 'assets/octopusSprite.png', 125, 40, 3);   
         game.load.audio('pop', 'assets/sounds/pop.ogg');
-        game.load.audio('argh', 'assets/sounds/argh.wav');
+        game.load.audio('lose', 'assets/sounds/lose.wav');
         game.load.audio('under', 'assets/sounds/under.wav');
         
             

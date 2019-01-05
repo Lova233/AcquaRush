@@ -41,7 +41,7 @@ AcquaRush.Game = {
         //this.timer3 = game.time.events.loop(10000, this.changeVelocity, this);
         this.timer4 = game.time.events.loop(5000, this.addStarBubble, this);
         //this.timer5 = game.time.events.loop(10000, this.destroyBubble, this);
-        this.timer6 = game.time.events.loop(1000, this.addShark, this);
+        this.timer6 = game.time.events.loop(700, this.addShark, this);
         this.timer7 = game.time.events.loop(2000, this.addOctopus, this);
         this.timer8 = game.time.events.loop(1000, this.getDistance, this)
         this.timer9 = game.time.events.loop(1000, this.changeVelocity, this)
@@ -58,7 +58,7 @@ AcquaRush.Game = {
         this.lifes = game.add.group();
         
         this.pop = game.add.audio('pop'); 
-        this.argh = game.add.audio('argh'); 
+        this.loseLife = game.add.audio('lose'); 
         this.under = game.add.audio('under'); 
         this.under.play();
 
@@ -66,6 +66,10 @@ AcquaRush.Game = {
         this.fish.alive = true;
         this.fish.anchor.setTo(-0.2, 0.5);
         this.fish.scale.setTo(0.2, 0.2);
+        game.physics.arcade.enable(this.fish);
+        this.fish.body.collideWorldBounds=true;
+        this.fish.body.bounce.setTo(0.9, 0.9);
+
         var swim = this.fish.animations.add('swim');
         this.fish.animations.play('swim', 5, true);
         
@@ -73,12 +77,11 @@ AcquaRush.Game = {
        // this.lifeImage = game.add.sprite(500, 20, 'life');
        //  this.lifeImage.scale.setTo(0.2, 0.2);
 
-        game.physics.arcade.enable(this.fish);
-            
+        
         let style = { font: "2rem Roboto", fill: "#FFFFFF", align: "center" };
         this.scoreEnergy = game.add.text(10, 10, 'ENERGY:' + this.energy , style);
         this.scoreDistance = game.add.text(200, 10, 'DISTANCE:' + this.distance, style)
-        this.totalLife = game.add.text(380, 10, 'LIFE:' + this.life , style);
+        this.totalLife = game.add.text(420, 10, 'LIFE:' + this.life , style);
 
 
         this.fish.body.gravity.y = 900;
@@ -96,13 +99,7 @@ AcquaRush.Game = {
         this.totalLife.destroy();
         this.scoreEnergy = game.add.text(10, 10, 'SPEED:' + this.energy , style);
         this.scoreDistance = game.add.text(200, 10, 'DISTANCE:' + game.scores.distance , style);
-        this.totalLife = game.add.text(400, 10, 'LIFE:' + this.life , style);
-        if (this.fish.angle < 20){
-            this.fish.angle += 1;}
-        if (this.fish.y < 0 || this.fish.y > 490){
-            this.restartGame();}
-        if(this.energy < 0){
-            this.fish.alive = false;}
+        this.totalLife = game.add.text(420, 10, 'LIFE:' + this.life , style);
         if(this.life < 0){
             this.restartGame()
         }
@@ -205,7 +202,7 @@ AcquaRush.Game = {
     sharksGetBird: function(bird, sharkSprite){
         if(!sharkSprite.HasEaten){     
         this.life -=1; 
-//        this.argh.play();
+        this.loseLife.play();
         sharkSprite.HasEaten = true;
         }},
         
