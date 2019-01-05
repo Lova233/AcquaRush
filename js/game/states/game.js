@@ -8,7 +8,8 @@ AcquaRush.Game = {
     var energy;
     var distance;
     var maxEnergy;
-    var speed
+    var speed;
+    var distanza;
     },
 
 
@@ -20,9 +21,8 @@ AcquaRush.Game = {
         }
         
         
-        
+        this.distanza = 0;
         this.maxEnergy = 100;
-        this.sharkvelocity = -500;
         this.bubblevelocity = -400;
         console.log(this.energy,"eccolo");
         this.energy = 30;
@@ -42,6 +42,7 @@ AcquaRush.Game = {
         this.timer6 = game.time.events.loop(1000, this.addShark, this);
         this.timer7 = game.time.events.loop(2000, this.addOctopus, this);
         this.timer8 = game.time.events.loop(1000, this.getDistance, this)
+        this.timer9 = game.time.events.loop(1000, this.changeVelocity, this)
 
 
         //    this.timer = game.time.event.loop(15000, this.changeDirection, this);
@@ -84,7 +85,7 @@ AcquaRush.Game = {
         let style = { font: "2rem Roboto", fill: "#FFFFFF", align: "center" };
         this.scoreEnergy.destroy();
         this.scoreDistance.destroy();
-        this.scoreEnergy = game.add.text(10, 10, 'ENERGY:' + this.energy , style);
+        this.scoreEnergy = game.add.text(10, 10, 'SPEED:' + this.energy , style);
         this.scoreDistance = game.add.text(200, 10, 'DISTANCE:' + game.scores.distance , style);
         if (this.fish.angle < 20){
             this.fish.angle += 1;}
@@ -96,6 +97,7 @@ AcquaRush.Game = {
         game.physics.arcade.overlap(this.bubbleStars, this.fish, this.getBubbleStar, null, this);
         game.physics.arcade.overlap(this.sharks, this.fish, this.sharksGetBird, null, this);
         this.background.autoScroll(this.changeSpeed(this.energy), -0);
+  
     },
     
     
@@ -139,7 +141,7 @@ AcquaRush.Game = {
         sharkSprite.animations.play('swim', 30, true);
         game.physics.arcade.enableBody(sharkSprite);
         sharkSprite.body.gravity.y = maxMinGravity; 
-        sharkSprite.body.velocity.x = this.sharkvelocity;
+        sharkSprite.body.velocity.x = this.changeVelocity();
         this.sharks.add(sharkSprite);
         sharkSprite.outOfBoundsKill = true;
     },
@@ -180,6 +182,9 @@ AcquaRush.Game = {
     },
     
     getDistance: function(){
+        this.distanza = this.distanza + (this.energy / 10);
+        game.scores.distance = Math.round(this.distanza);
+        console.log(this.distance,"asdasd")
     },
 
     
@@ -205,14 +210,13 @@ AcquaRush.Game = {
     // Restart the game
     restartGame: function() {
     this.state.start('GameOver',true, false, this.distance);
-
     },
-
-
+    
     
     changeVelocity: function(){
-      this.sharkvelocity = -600;  
+    return -( 500 + (this.energy * 3));
     },
+    
     changeSpeed: function(){ 
      return this.energy - (4 * this.energy);
     },
