@@ -1,14 +1,22 @@
 AcquaRush.Menu = {
     create: function() {
+        
+
         console.log("menuee")
         let style = { font: "2rem Roboto", fill: "#FFFFFF", align: "center" };
         this.background = game.add.tileSprite(0, 0, game.width, game.height - 1, 'background');
         this.background.autoScroll(-30, -0);
         this.title = game.add.sprite(245, 60, 'title').scale.setTo(0.4, 0.4);
-        this.option = game.add.sprite(670, 260, 'option');
-	    game.add.tween(this.option).from( { y: -200 }, 2000, Phaser.Easing.Bounce.Out, true);
-        this.new = game.add.sprite(370, 260, 'new');
-        game.add.tween(this.new).from( { y: -200 }, 2000, Phaser.Easing.Bounce.Out, true);   
+        //this.option = game.add.sprite(670, 260, 'option');
+	    //game.add.tween(this.option).from( { y: -200 }, 2000, Phaser.Easing.Bounce.Out, true);
+        //this.new = game.add.sprite(370, 260, 'new');
+        //game.add.tween(this.new).from( { y: -200 }, 2000, Phaser.Easing.Bounce.Out, true);   
+        this.normal = game.add.sprite(440, 260, 'normal');
+        game.add.tween(this.normal).from( { y: -200 }, 2000, Phaser.Easing.Bounce.Out, true);   
+        this.hard = game.add.sprite(560, 260, 'hard');
+        game.add.tween(this.hard).from( { y: -200 }, 2000, Phaser.Easing.Bounce.Out, true);   
+        this.insane = game.add.sprite(680, 260, 'insane');
+        game.add.tween(this.insane).from( { y: -200 }, 2000, Phaser.Easing.Bounce.Out, true);   
         this.fish = game.add.sprite(200, 245, 'jelly');
         this.fish.anchor.setTo(-0.2, 0.5);
         this.fish.scale.setTo(0.4, 0.4);
@@ -24,16 +32,30 @@ AcquaRush.Menu = {
         
 
         
-        this.new.inputEnabled = true;
-        this.new.events.onInputDown.add(this.start, this);
-    
+        this.normal.inputEnabled = true;
+        this.normal.events.onInputDown.add(this.startNormal, this);
+        this.hard.inputEnabled = true;
+        this.hard.events.onInputDown.add(this.startHard, this);
+        this.insane.inputEnabled = true;
+        this.insane.events.onInputDown.add(this.startInsane, this);
     },
 
-start: function(){
+startNormal: function(){
         game.scale.startFullScreen(false);
         this.state.start('Game');
-    
-
+},
+startHard: function(){
+        game.scores.difficulty = 1.3
+        game.scale.startFullScreen(false);
+        this.state.start('Game');
+},
+startInsane: function(){
+        game.scores.difficulty = 2
+        game.scale.startFullScreen(false);
+        this.state.start('Game');
 }
+    
+    
+    
 
 }

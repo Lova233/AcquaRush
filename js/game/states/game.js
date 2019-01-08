@@ -2,10 +2,7 @@ AcquaRush.Game = {
     preload: function() {
     let sharkvelocity;
     let bubblevelocity;
-    let energy;
-    let distance;
     let maxEnergy;
-    let speed;
     let currentDistance;
     let life;
     },
@@ -14,16 +11,15 @@ AcquaRush.Game = {
     create: function() {
         
         
-        game.scores = {
-            distance: 0,
-        }
+
+        
+        let sharkDebug =  game.add.sprite(20,200, 'sharkSprite');
         
         
         this.currentDistance = 0;
         this.maxEnergy = 100;
         this.bubblevelocity = -400;
         console.log(this.energy,"eccolo");
-        this.energy = 30;
         this.life = 3;
 
         
@@ -41,7 +37,7 @@ AcquaRush.Game = {
         //this.timer3 = game.time.events.loop(10000, this.changeVelocity, this);
         this.timer4 = game.time.events.loop(5000, this.addStarBubble, this);
         //this.timer5 = game.time.events.loop(10000, this.destroyBubble, this);
-        this.timer6 = game.time.events.loop(700, this.addShark, this);
+        this.timer6 = game.time.events.loop(900, this.addShark, this);
         this.timer7 = game.time.events.loop(2000, this.addOctopus, this);
         this.timer8 = game.time.events.loop(1000, this.getDistance, this);
         this.timer9 = game.time.events.loop(1000, this.changeVelocity, this);
@@ -54,6 +50,7 @@ AcquaRush.Game = {
         
         
         this.sharks = game.add.group();
+        this.sharks.enableBody = true;
         this.bubbles = game.add.group();
         this.bubbleStars = game.add.group();
         this.octopuss = game.add.group();
@@ -68,10 +65,11 @@ AcquaRush.Game = {
        
 
         this.fish = game.add.sprite(100, 245, 'jelly');
+        game.physics.arcade.enable(this.fish);
         this.fish.alive = true;
         this.fish.anchor.setTo(-0.2, 0.5);
         this.fish.scale.setTo(0.2, 0.2);
-        game.physics.arcade.enable(this.fish);
+   
         this.fish.body.collideWorldBounds=true;
         this.fish.body.bounce.setTo(0.9, 0.9);
 
@@ -102,7 +100,7 @@ AcquaRush.Game = {
         this.scoreEnergy.destroy();
         this.scoreDistance.destroy();
         this.totalLife.destroy();
-        this.scoreEnergy = game.add.text(10, 10, 'SPEED:' + this.energy , style);
+        this.scoreEnergy = game.add.text(10, 10, 'SPEED:' + game.scores.energy , style);
         this.scoreDistance = game.add.text(200, 10, 'DISTANCE:' + game.scores.distance , style);
         this.totalLife = game.add.text(420, 10, 'LIFE:' + this.life , style);
         if(this.life < 0){
@@ -110,8 +108,9 @@ AcquaRush.Game = {
         }
         game.physics.arcade.overlap(this.bubbles, this.fish, this.getBubble, null, this);
         game.physics.arcade.overlap(this.bubbleStars, this.fish, this.getBubbleStar, null, this);               game.physics.arcade.overlap(this.lifes, this.fish, this.getLife, null, this);
-        game.physics.arcade.overlap(this.sharks, this.fish, this.sharksGetBird, null, this);
-        this.background.autoScroll(this.changeSpeed(this.energy), -0);
+        game.physics.arcade.overlap(this.sharks, this.fish, this.sharksGetBird, null, this);               game.physics.arcade.overlap(this.octopuss, this.fish, this.octoGetBird, null, this);
+
+        this.background.autoScroll(this.changeSpeed(game.scores.energy), -0);
   
     },
     
@@ -167,8 +166,8 @@ AcquaRush.Game = {
         sharkSprite.body.width = 46;  
         sharkSprite.body.height = 82;
         sharkSprite.scale.setTo(maxMinScale,maxMinScale);
-        var swim = sharkSprite.animations.add('swim');
-        sharkSprite.animations.play('swim', 30, true);
+        //var swim = sharkSprite.animations.add('swim');
+        //sharkSprite.animations.play('swim', 30, true);
         sharkSprite.body.gravity.y = maxMinGravity; 
         sharkSprite.body.velocity.x = this.changeVelocity();
         this.sharks.add(sharkSprite);
@@ -201,7 +200,7 @@ AcquaRush.Game = {
     getBubble: function(bird, bubble) {
         this.pop.play();
         bubble.destroy();
-        this.energy+=15 ;
+        game.scores.energy+=15 ;
     },
     getLife: function(bird, newLife) {
         this.lifeUp.play(); 
@@ -212,11 +211,11 @@ AcquaRush.Game = {
     getBubbleStar: function(bird, bubbleStar) {
         this.pop.play();
         bubbleStar.destroy();
-        this.energy+=40;
+        game.scores.energy+=40;
     },
     
     getDistance: function(){
-        this.currentDistance = this.currentDistance + (this.energy / 10);
+        this.currentDistance = this.currentDistance + (game.scores.energy / 10);
         game.scores.distance = Math.round(this.currentDistance);
         console.log(this.distance,"asdasd")
     },
@@ -229,7 +228,15 @@ AcquaRush.Game = {
         this.life -=1; 
         this.loseLife.play();
         sharkSprite.HasEaten = true;
-        }},
+    }},
+    
+    octoGetBird: function(bird, octoSprite){
+        if(!octoSprite.HasEaten){     
+        //game.paused = true;
+        game.scores.energy = Math.round(game.scores.energy / 2); 
+        //this.loseLife.play();
+        octoSprite.HasEaten = true;
+    }},
         
 
 
@@ -237,9 +244,9 @@ AcquaRush.Game = {
         if (this.fish.alive == false)
         return;
         this.fish.body.velocity.y = -350;
-        game.add.tween(this.fish).to({
-            angle: -20
-        }, 100).start()
+      //  game.add.tween(this.fish).to({
+        //    angle: -20
+    //      }, 100).start()
     },
 
     // Restart the game
@@ -249,11 +256,11 @@ AcquaRush.Game = {
     
     
     changeVelocity: function(){
-    return -( 500 + (this.energy * 3));
+    return -(( 500 + (game.scores.energy * 3)) * game.scores.difficulty);
     },
     
     changeSpeed: function(){ 
-     return this.energy - (4 * this.energy);
+     return game.scores.energy - (4 * game.scores.energy);
     },
     
     
@@ -266,7 +273,12 @@ AcquaRush.Game = {
         this.bubbles.children.map((bubble)=>bubble.body.gravity.y = -100);
         this.bubbleStars.children.map((bubbleStar)=>bubbleStar.body.gravity.y = -80)}
         },
-    
+     render:function() {
+         game.debug.text('Elapsed seconds: ' + this.game.time.totalElapsedSeconds(), 32, 32);
+         game.debug.body(this.fish);
+         this.sharks.children.forEach(shark=> game.debug.body(shark));
+         game.debug.body(this.sharks);
+     },
 
        
     };
