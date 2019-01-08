@@ -13,8 +13,7 @@ AcquaRush.Menu = {
         this.fish.anchor.setTo(-0.2, 0.5);
         this.fish.scale.setTo(0.4, 0.4);
         var swim = this.fish.animations.add('swim');
-        this.fish.animations.play('swim', 5, true);
-        
+        this.fish.animations.play('swim', 5, true);   
         var octoSprite = game.add.sprite(600, 350, 'octoSprite');
         octoSprite.scale.setTo(1.2,1.2)
         var swim = octoSprite.animations.add('swim');
@@ -31,7 +30,9 @@ AcquaRush.Menu = {
     },
 
 start: function(){
+        game.scale.startFullScreen(false);
         this.state.start('Game');
+    
 
 }
 

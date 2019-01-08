@@ -1,27 +1,31 @@
 AcquaRush.PreLoad = {
         preload: function() {
         this.ready = false;  
+
         game.load.image('title', 'assets/title.png');
         game.load.spritesheet('jelly', 'assets/jelly.png',280, 312,4);
         game.load.image('bubble', 'assets/bubble.png');
-        game.load.image('life', 'assets/fullLife.png');
+        game.load.image('life', 'assets/life.png');
         game.load.image('bubbleStar', 'assets/bubbleStar.png');
         game.load.image('menu', 'assets/menu.png');
         game.load.image('again', 'assets/again.png');
         game.load.image('new', 'assets/new.png');
         game.load.image('option', 'assets/option.png');
+       // game.load.image('sharkSprite', 'assets/sharky.png');
         game.load.spritesheet('octoSprite', 'assets/octopusSprite.png', 125, 40, 3);   
         game.load.audio('pop', 'assets/sounds/pop.ogg');
         game.load.audio('lose', 'assets/sounds/lose.wav');
         game.load.audio('under', 'assets/sounds/under.wav');
-        
+        game.load.audio('lifeUp', 'assets/sounds/lifeUp.wav');
             
-        if (this.game.device.desktop && !this.game.device.firefox)
-        game.load.spritesheet('sharkSprite', 'assets/sharkSprite.png', 423, 163, 10);   
-        else
-        game.load.spritesheet('sharkSprite', 'assets/sharkSpriteSmall.png', 202, 79, 10);   
+        //if (this.game.device.desktop && !this.game.device.firefox)
+       game.load.spritesheet('sharkSprite', 'assets/sharkSprite.png', 422, 150, 10);  
 
-        this.load.onLoadComplete.add(this.onLoadComplete, this);
+            
+        //else
+        //game.load.spritesheet('sharkSprite', 'assets/sharkSpriteSmall.png', 202, 79, 10);   
+        this.load.onLoadComplete.add(this.onLoadComplete, this);            
+        
 
     },
     create: function() {

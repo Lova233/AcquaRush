@@ -1,16 +1,13 @@
-// Create our 'main' state that will contain the game
 AcquaRush.Game = {
     preload: function() {
-    var bmpText;
-    var count;
-    var sharkvelocity;
-    var bubblevelocity;
-    var energy;
-    var distance;
-    var maxEnergy;
-    var speed;
-    var distanza;
-    var life;
+    let sharkvelocity;
+    let bubblevelocity;
+    let energy;
+    let distance;
+    let maxEnergy;
+    let speed;
+    let currentDistance;
+    let life;
     },
 
 
@@ -22,7 +19,7 @@ AcquaRush.Game = {
         }
         
         
-        this.distanza = 0;
+        this.currentDistance = 0;
         this.maxEnergy = 100;
         this.bubblevelocity = -400;
         console.log(this.energy,"eccolo");
@@ -30,8 +27,11 @@ AcquaRush.Game = {
         this.life = 3;
 
         
-        
+	    game.physics.startSystem(Phaser.Physics.P2JS);
+
         this.background = game.add.tileSprite(0, 0, game.width, game.height - 1, 'background');
+        
+        
         
         
         
@@ -43,8 +43,10 @@ AcquaRush.Game = {
         //this.timer5 = game.time.events.loop(10000, this.destroyBubble, this);
         this.timer6 = game.time.events.loop(700, this.addShark, this);
         this.timer7 = game.time.events.loop(2000, this.addOctopus, this);
-        this.timer8 = game.time.events.loop(1000, this.getDistance, this)
-        this.timer9 = game.time.events.loop(1000, this.changeVelocity, this)
+        this.timer8 = game.time.events.loop(1000, this.getDistance, this);
+        this.timer9 = game.time.events.loop(1000, this.changeVelocity, this);
+        this.timer10 = game.time.events.loop(10000, this.addLife, this)
+
 
 
         //    this.timer = game.time.event.loop(15000, this.changeDirection, this);
@@ -60,7 +62,10 @@ AcquaRush.Game = {
         this.pop = game.add.audio('pop'); 
         this.loseLife = game.add.audio('lose'); 
         this.under = game.add.audio('under'); 
+        this.lifeUp = game.add.audio('lifeUp');
         this.under.play();
+        
+       
 
         this.fish = game.add.sprite(100, 245, 'jelly');
         this.fish.alive = true;
@@ -104,7 +109,7 @@ AcquaRush.Game = {
             this.restartGame()
         }
         game.physics.arcade.overlap(this.bubbles, this.fish, this.getBubble, null, this);
-        game.physics.arcade.overlap(this.bubbleStars, this.fish, this.getBubbleStar, null, this);
+        game.physics.arcade.overlap(this.bubbleStars, this.fish, this.getBubbleStar, null, this);               game.physics.arcade.overlap(this.lifes, this.fish, this.getLife, null, this);
         game.physics.arcade.overlap(this.sharks, this.fish, this.sharksGetBird, null, this);
         this.background.autoScroll(this.changeSpeed(this.energy), -0);
   
@@ -123,6 +128,18 @@ AcquaRush.Game = {
         this.bubbleStars.add(bubbleStar);
 
     },
+    addLife: function(x, y) {
+        x = this.game.width + 100;
+        y = 420 - (200 * Math.floor(Math.random() * 3));
+        let newLife = game.add.sprite(x, y, 'life');
+        newLife.scale.setTo(0.5, 0.5);
+        game.physics.arcade.enableBody(newLife);
+        newLife.body.gravity.y = 10; 
+        game.physics.enable([newLife, this.fish], Phaser.Physics.ARCADE)
+        newLife.body.velocity.x = this.bubblevelocity;
+        this.lifes.add(newLife);
+       
+    },
 
     addBubble: function(x, y) {
         let maxMin = (Math.random() * (0.12 - 0.0200) + 0.08).toFixed(4);
@@ -139,17 +156,19 @@ AcquaRush.Game = {
        
     },
     
+    
     addShark: function(x, y) {
         let maxMinScale = (Math.random() * (0.5 - 0.0200) + 0.2).toFixed(4);
         let maxMinGravity = Math.random() * 20 - 10; 
         x = this.game.width + 100;
         y = Math.random()*450;
-        console.log(y,"questa è y")
         var sharkSprite = game.add.sprite(x, y, 'sharkSprite');
-        sharkSprite.scale.setTo(maxMinScale,maxMinScale)
+        game.physics.arcade.enableBody(sharkSprite);
+        sharkSprite.body.width = 46;  
+        sharkSprite.body.height = 82;
+        sharkSprite.scale.setTo(maxMinScale,maxMinScale);
         var swim = sharkSprite.animations.add('swim');
         sharkSprite.animations.play('swim', 30, true);
-        game.physics.arcade.enableBody(sharkSprite);
         sharkSprite.body.gravity.y = maxMinGravity; 
         sharkSprite.body.velocity.x = this.changeVelocity();
         this.sharks.add(sharkSprite);
@@ -163,12 +182,12 @@ AcquaRush.Game = {
         y = Math.random()*450;
         console.log(y,"questa è y")
         var octoSprite = game.add.sprite(x, y, 'octoSprite');
+        game.physics.arcade.enableBody(octoSprite);
         octoSprite.scale.setTo(maxMinScale,maxMinScale)
         var swim = octoSprite.animations.add('swim');
         octoSprite.animations.play('swim', 5, true);
-        game.physics.arcade.enableBody(octoSprite);
         octoSprite.body.gravity.y = maxMinGravity; 
-        octoSprite.body.velocity.x = this.sharkvelocity;
+        octoSprite.body.velocity.x = this.changeVelocity();
         this.octopuss.add(octoSprite);
         octoSprite.outOfBoundsKill = true;
     },
@@ -184,6 +203,11 @@ AcquaRush.Game = {
         bubble.destroy();
         this.energy+=15 ;
     },
+    getLife: function(bird, newLife) {
+        this.lifeUp.play(); 
+        newLife.destroy();
+        this.life += 1;
+    },
     
     getBubbleStar: function(bird, bubbleStar) {
         this.pop.play();
@@ -192,8 +216,8 @@ AcquaRush.Game = {
     },
     
     getDistance: function(){
-        this.distanza = this.distanza + (this.energy / 10);
-        game.scores.distance = Math.round(this.distanza);
+        this.currentDistance = this.currentDistance + (this.energy / 10);
+        game.scores.distance = Math.round(this.currentDistance);
         console.log(this.distance,"asdasd")
     },
 
@@ -201,6 +225,7 @@ AcquaRush.Game = {
     
     sharksGetBird: function(bird, sharkSprite){
         if(!sharkSprite.HasEaten){     
+        //game.paused = true;
         this.life -=1; 
         this.loseLife.play();
         sharkSprite.HasEaten = true;
@@ -240,7 +265,9 @@ AcquaRush.Game = {
         else{
         this.bubbles.children.map((bubble)=>bubble.body.gravity.y = -100);
         this.bubbleStars.children.map((bubbleStar)=>bubbleStar.body.gravity.y = -80)}
-        }
+        },
+    
+
        
     };
 
