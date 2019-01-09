@@ -38,10 +38,17 @@ AcquaRush.Game = {
         this.timer4 = game.time.events.loop(5000, this.addStarBubble, this);
         //this.timer5 = game.time.events.loop(10000, this.destroyBubble, this);
         this.timer6 = game.time.events.loop(900, this.addShark, this);
-        this.timer7 = game.time.events.loop(2000, this.addOctopus, this);
         this.timer8 = game.time.events.loop(1000, this.getDistance, this);
         this.timer9 = game.time.events.loop(1000, this.changeVelocity, this);
         this.timer10 = game.time.events.loop(10000, this.addLife, this)
+        this.timer11 = game.time.events.loop(1000, ()=>{
+        if (this.game.time.totalElapsedSeconds() > 20){
+            console.log(this.game.time.totalElapsedSeconds(),"sono qua")
+            this.timer7 = game.time.events.loop(2000, this.addOctopus, this);
+        }
+        })
+        
+       
 
 
 

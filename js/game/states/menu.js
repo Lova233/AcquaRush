@@ -11,11 +11,11 @@ AcquaRush.Menu = {
 	    //game.add.tween(this.option).from( { y: -200 }, 2000, Phaser.Easing.Bounce.Out, true);
         //this.new = game.add.sprite(370, 260, 'new');
         //game.add.tween(this.new).from( { y: -200 }, 2000, Phaser.Easing.Bounce.Out, true);   
-        this.normal = game.add.sprite(440, 260, 'normal');
+        this.normal = game.add.sprite(game.width / 2 - 200, 260, 'normal');
         game.add.tween(this.normal).from( { y: -200 }, 2000, Phaser.Easing.Bounce.Out, true);   
-        this.hard = game.add.sprite(560, 260, 'hard');
+        this.hard = game.add.sprite(game.width / 2 - 50, 260, 'hard');
         game.add.tween(this.hard).from( { y: -200 }, 2000, Phaser.Easing.Bounce.Out, true);   
-        this.insane = game.add.sprite(680, 260, 'insane');
+        this.insane = game.add.sprite(game.width / 2 + 100, 260, 'insane');
         game.add.tween(this.insane).from( { y: -200 }, 2000, Phaser.Easing.Bounce.Out, true);   
         this.fish = game.add.sprite(200, 245, 'jelly');
         this.fish.anchor.setTo(-0.2, 0.5);
@@ -41,15 +41,19 @@ AcquaRush.Menu = {
     },
 
 startNormal: function(){
+        game.time.reset();
+        game.scores.difficulty = 0.9;
         game.scale.startFullScreen(false);
         this.state.start('Game');
 },
 startHard: function(){
-        game.scores.difficulty = 1.3
+        game.time.reset();
+        game.scores.difficulty = 1.3;
         game.scale.startFullScreen(false);
         this.state.start('Game');
 },
 startInsane: function(){
+        game.time.reset();
         game.scores.difficulty = 2
         game.scale.startFullScreen(false);
         this.state.start('Game');
