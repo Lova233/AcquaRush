@@ -44,7 +44,7 @@ AcquaRush.Game = {
         this.timer11 = game.time.events.loop(1000, ()=>{
         if (this.game.time.totalElapsedSeconds() > 20){
             console.log(this.game.time.totalElapsedSeconds(),"sono qua")
-            this.timer7 = game.time.events.loop(2000, this.addOctopus, this);
+            this.timer7 = game.time.events.loop(7000, this.addOctopus, this);
         }
         })
         
