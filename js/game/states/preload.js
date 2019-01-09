@@ -1,11 +1,6 @@
 AcquaRush.PreLoad = {
         preload: function() {
-        this.ready = false;  
-        game.scores = {
-            distance: 0,
-            energy: 30,
-            difficulty:1,
-        }
+      
 
         game.load.image('title', 'assets/title.png');
         game.load.spritesheet('jelly', 'assets/jelly.png',280,270,4);
@@ -25,6 +20,7 @@ AcquaRush.PreLoad = {
         game.load.audio('lose', 'assets/sounds/lose.wav');
         game.load.audio('under', 'assets/sounds/under.wav');
         game.load.audio('lifeUp', 'assets/sounds/lifeUp.wav');
+        game.load.audio('loseEnergy','assets/sounds/loseEnergy.wav');
             
         //if (this.game.device.desktop && !this.game.device.firefox)
         game.load.spritesheet('sharkSprite', 'assets/sharkSprite.png', 422, 150, 10);  

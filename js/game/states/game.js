@@ -67,6 +67,7 @@ AcquaRush.Game = {
         this.loseLife = game.add.audio('lose'); 
         this.under = game.add.audio('under'); 
         this.lifeUp = game.add.audio('lifeUp');
+        this.loseEnergy = game.add.audio('loseEnergy');
         this.under.play();
         
        
@@ -241,7 +242,7 @@ AcquaRush.Game = {
         if(!octoSprite.HasEaten){     
         //game.paused = true;
         game.scores.energy = Math.round(game.scores.energy / 2); 
-        //this.loseLife.play();
+        this.loseEnergy.play();
         octoSprite.HasEaten = true;
     }},
         
