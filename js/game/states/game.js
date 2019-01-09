@@ -103,7 +103,7 @@ AcquaRush.Game = {
         this.totalLife.destroy();
         this.scoreEnergy = game.add.text(10, 10, 'SPEED:' + game.scores.energy , style);
         this.scoreDistance = game.add.text(200, 10, 'DISTANCE:' + game.scores.distance , style);
-        this.totalLife = game.add.text(420, 10, 'LIFE:' + this.life , style);
+        this.totalLife = game.add.text(600, 10, 'LIFE:' + this.life , style);
         if(this.life < 0){
             console.log("restart");
             this.restartGame()
@@ -165,8 +165,8 @@ AcquaRush.Game = {
         let puffSprite = game.add.sprite(x, y, 'puffer');
         puffSprite.scale.setTo(0.7,0.7);
         game.physics.arcade.enableBody(puffSprite);
-        puffSprite.animations.add('swim',[0,4]);
-        puffSprite.animations.play('swim', 7, true);
+        puffSprite.animations.add('swim');
+        puffSprite.animations.play('swim', 8, true);
         puffSprite.scale.x *= -1;
         puffSprite.body.gravity.y = maxMinGravity; 
         puffSprite.body.velocity.x = this.pufferVelocity;
@@ -246,6 +246,7 @@ AcquaRush.Game = {
     sharksGetBird: function(bird, sharkSprite){
         if(!sharkSprite.HasEaten){     
         this.life -=1; 
+        game.scores.energy = Math.round(game.scores.energy / 2); 
         this.loseLife.play();
         sharkSprite.HasEaten = true;
     }},
@@ -258,8 +259,6 @@ AcquaRush.Game = {
     }},
     pufferGetBird: function(bird, pufferSprite){
         if(!pufferSprite.HasEaten){     
-        pufferSprite.animations.add('puff', [5,13]);
-        pufferSprite.animations.play('puff', 7, true);
         game.scores.energy = Math.round(game.scores.energy / 0.5); 
         pufferSprite.HasEaten = true;
  
