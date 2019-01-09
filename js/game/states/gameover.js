@@ -21,6 +21,7 @@ AcquaRush.GameOver = {
 
 },
         newGame: function(){
+        game.time.reset();
         this.state.start('Game');
 
 }};

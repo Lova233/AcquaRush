@@ -259,7 +259,13 @@ AcquaRush.Game = {
     // Restart the game
     restartGame: function() {
     this.state.start('GameOver',true, false, this.distance);
+    this.resetGame();
     },
+    resetGame: function(){
+    game.scores = {
+            distance: 0,
+            energy: 30,
+    }},
     
     
     changeVelocity: function(){

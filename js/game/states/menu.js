@@ -1,6 +1,13 @@
 AcquaRush.Menu = {
     create: function() {
         
+        this.ready = false;  
+        game.scores = {
+            distance: 0,
+            energy: 30,
+            difficulty:1,
+        }
+        
 
         console.log("menuee")
         let style = { font: "2rem Roboto", fill: "#FFFFFF", align: "center" };
@@ -42,12 +49,14 @@ AcquaRush.Menu = {
 
 startNormal: function(){
         game.time.reset();
+        this.resetGame()
         game.scores.difficulty = 0.9;
         game.scale.startFullScreen(false);
         this.state.start('Game');
 },
 startHard: function(){
         game.time.reset();
+        this.resetGame()
         game.scores.difficulty = 1.3;
         game.scale.startFullScreen(false);
         this.state.start('Game');
@@ -57,6 +66,14 @@ startInsane: function(){
         game.scores.difficulty = 2
         game.scale.startFullScreen(false);
         this.state.start('Game');
+},
+    
+    
+resetGame: function(){
+    game.scores = {
+            distance: 0,
+            energy: 30,
+    }
 }
     
     
