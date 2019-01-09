@@ -14,6 +14,7 @@ AcquaRush.PreLoad = {
         game.load.image('normal', 'assets/normal.png');
         game.load.image('hard', 'assets/hard.png');
         game.load.image('insane', 'assets/insane.png'); 
+        game.load.spritesheet('puffer', 'assets/pufferFishSmall.png', 279.5, 279, 14)
        // game.load.image('sharkSprite', 'assets/sharky.png');
         game.load.spritesheet('octoSprite', 'assets/octopusSprite.png', 125, 40, 3);   
         game.load.audio('pop', 'assets/sounds/pop.ogg');

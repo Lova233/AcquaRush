@@ -27,13 +27,21 @@ AcquaRush.Menu = {
         this.fish = game.add.sprite(200, 245, 'jelly');
         this.fish.anchor.setTo(-0.2, 0.5);
         this.fish.scale.setTo(0.4, 0.4);
-        var swim = this.fish.animations.add('swim');
-        this.fish.animations.play('swim', 5, true);   
-        var octoSprite = game.add.sprite(600, 350, 'octoSprite');
+        this.fish.animations.add('swim');
+        this.fish.animations.play('swim', 5, true);  
+        
+        let octoSprite = game.add.sprite(600, 350, 'octoSprite');
         octoSprite.scale.setTo(1.2,1.2)
-        var swim = octoSprite.animations.add('swim');
+        octoSprite.animations.add('swim');
         octoSprite.animations.play('swim', 5, true);
-
+        
+        
+        let puffer = game.add.sprite(840,190,'puffer');
+        puffer.scale.setTo(0.7,0.7);
+        let puff = puffer.animations.add('puff');
+        puffer.animations.play('puff',8,true);
+       
+        
         
         
         

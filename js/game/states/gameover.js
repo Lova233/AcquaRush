@@ -22,6 +22,14 @@ AcquaRush.GameOver = {
 },
         newGame: function(){
         game.time.reset();
+        this.resetGame();
         this.state.start('Game');
 
-}};
+},
+
+resetGame: function(){
+    game.scores = {
+            distance: 0,
+            energy: 30,
+            difficulty: game.scores.difficulty,
+    }}};
