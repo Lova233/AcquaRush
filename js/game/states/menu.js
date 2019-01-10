@@ -60,10 +60,7 @@ startNormal: function(){
         game.time.reset();
         this.resetGame()
         game.scores.difficulty = 0.9;
-    
-    
-        if(!this.game.device.desktop){
-        game.scale.startFullScreen(false);}
+        game.scale.startFullScreen(false);
         this.state.start('Game');
 },
 startHard: function(){

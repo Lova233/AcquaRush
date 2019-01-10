@@ -2,9 +2,8 @@
 let height = window.innerHeight / 1.2;
 
 let width = window.innerWidth / 1.2;
-var game = new Phaser.Game(width,height);
 
-
+var game = new Phaser.Game(width,height , Phaser.AUTO, '');
 
 
 game.state.add('PreLoad', AcquaRush.PreLoad);
