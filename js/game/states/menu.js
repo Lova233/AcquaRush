@@ -24,20 +24,20 @@ AcquaRush.Menu = {
         game.add.tween(this.hard).from( { y: -200 }, 2000, Phaser.Easing.Bounce.Out, true);   
         this.insane = game.add.sprite(game.width / 2 + 100, 260, 'insane');
         game.add.tween(this.insane).from( { y: -200 }, 2000, Phaser.Easing.Bounce.Out, true);   
-        this.fish = game.add.sprite(200, 245, 'jelly');
+        this.fish = game.add.sprite(game.width / 2 - 30, 370, 'jelly');
         this.fish.anchor.setTo(-0.2, 0.5);
-        this.fish.scale.setTo(0.4, 0.4);
+        this.fish.scale.setTo(0.2, 0.2);
         this.fish.animations.add('swim');
         this.fish.animations.play('swim', 5, true);  
         
-        let octoSprite = game.add.sprite(450, 320, 'octoSprite');
-        octoSprite.scale.setTo(1.2,1.2)
+        let octoSprite = game.add.sprite(game.width / 2 - 200, 370, 'octoSprite');
+        octoSprite.scale.setTo(0.9,0.9)
         octoSprite.animations.add('swim');
         octoSprite.animations.play('swim', 5, true);
         
         
-        let puffer = game.add.sprite(140,320,'puffer');
-        puffer.scale.setTo(0.7,0.7);
+        let puffer = game.add.sprite(game.width / 2 + 100,320,'puffer');
+        puffer.scale.setTo(0.4,0.4);
         let puff = puffer.animations.add('puff');
         puffer.animations.play('puff',8,true);
        

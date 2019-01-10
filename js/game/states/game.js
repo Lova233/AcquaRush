@@ -13,7 +13,6 @@ AcquaRush.Game = {
         this.maxEnergy = 100;
         this.bubbleVelocity = -400;
         this.pufferVelocity = -300;
-        console.log(this.energy,"eccolo");
         this.life = 3;
 
         
@@ -28,15 +27,14 @@ AcquaRush.Game = {
         this.jumpSound = game.add.audio('jump');
         this.timer1 = game.time.events.loop(1000, this.addBubble, this);
         this.timer2 = game.time.events.loop(5000, this.changeGravity, this);
-        //this.timer3 = game.time.events.loop(10000, this.changeVelocity, this);
-        this.timer4 = game.time.events.loop(5000, this.addStarBubble, this);
-        //this.timer5 = game.time.events.loop(10000, this.destroyBubble, this);
-        this.timer6 = game.time.events.loop(900, this.addShark, this);
-        this.timer7 = game.time.events.loop(5000, this.addOctopus, this);
-        this.timer8 = game.time.events.loop(1000, this.getDistance, this);
-        this.timer9 = game.time.events.loop(1000, this.changeVelocity, this);
-        this.timer10 = game.time.events.loop(10000, this.addLife, this);    
-        this.timer11 = game.time.events.loop(10000, this.addPuffer,this)
+        this.timer3 = game.time.events.loop(5000, this.addStarBubble, this);
+        this.timer4 = game.time.events.loop(this.getSharkFrequency(), this.addShark, this);
+        this.timer5 = game.time.events.loop(5000, this.addOctopus, this);
+        this.timer6 = game.time.events.loop(1000, this.getDistance, this);
+        this.timer7 = game.time.events.loop(1000, this.changeVelocity, this);
+        this.timer8 = game.time.events.loop(10000, this.addLife, this);    
+        this.timer9 = game.time.events.loop(10000, this.addPuffer,this)
+
         
        
         
@@ -98,6 +96,7 @@ AcquaRush.Game = {
 
     update: function() {
         let style = { font: "2rem Roboto", fill: "#FFFFFF", align: "center" };
+        
         this.scoreEnergy.destroy();
         this.scoreDistance.destroy();
         this.totalLife.destroy();
@@ -105,16 +104,10 @@ AcquaRush.Game = {
         this.scoreDistance = game.add.text(200, 10, 'DISTANCE:' + game.scores.distance , style);
         this.totalLife = game.add.text(600, 10, 'LIFE:' + this.life , style);
         if(this.life < 0){
-            console.log("restart");
             this.restartGame()
         }
-        game.physics.arcade.overlap(this.bubbles, this.fish, this.getBubble, null, this);
-        game.physics.arcade.overlap(this.bubbleStars, this.fish, this.getBubbleStar, null, this);               game.physics.arcade.overlap(this.lifes, this.fish, this.getLife, null, this);
-        game.physics.arcade.overlap(this.sharks, this.fish, this.sharksGetBird, null, this);               game.physics.arcade.overlap(this.octopuss, this.fish, this.octoGetBird, null, this);
-        game.physics.arcade.overlap(this.puffers, this.fish, this.pufferGetBird, null, this);
-
+        this.addsOverlap();
         this.background.autoScroll(this.changeSpeed(game.scores.energy), -0);
-  
     },
     
     
@@ -145,7 +138,6 @@ AcquaRush.Game = {
 
     addBubble: function(x, y) {
         let maxMin = (Math.random() * (0.12 - 0.0200) + 0.08).toFixed(4);
-        console.log(maxMin,"quello che cerchi");
         x = this.game.width + 100;
         y = 420 - (200 * Math.floor(Math.random() * 3));
         let bubble = game.add.sprite(x, y, 'bubble');
@@ -178,7 +170,7 @@ AcquaRush.Game = {
         let maxMinScale = (Math.random() * (0.5 - 0.0200) + 0.2).toFixed(4);
         let maxMinGravity = Math.random() * 20 - 10; 
         x = this.game.width + 100;
-        y = Math.random()*450;
+        y = (this.game.height / 5) * Math.random()*5;
         var sharkSprite = game.add.sprite(x, y, 'sharkSprite');
         game.physics.arcade.enableBody(sharkSprite);
         sharkSprite.body.width = 46;  
@@ -193,14 +185,11 @@ AcquaRush.Game = {
     },
     
     addOctopus: function(x,y){
-        console.log("time before: ",this.game.time.totalElapsedSeconds());
         if (this.game.time.totalElapsedSeconds() <+ 20) return;
-        console.log("time after: ",this.game.time.totalElapsedSeconds());
         let maxMinScale = (Math.random() * (1.2 - 0.9) + 0.9    ).toFixed(10);
         let maxMinGravity = Math.random() * 20 - 10; 
         x = this.game.width + 100;
-        y = Math.random()*450;
-        console.log(y,"questa è y")
+        y = this.game.height / 10 * Math.random(10);
         var octoSprite = game.add.sprite(x, y, 'octoSprite');
         game.physics.arcade.enableBody(octoSprite);
         octoSprite.scale.setTo(maxMinScale,maxMinScale)
@@ -214,7 +203,6 @@ AcquaRush.Game = {
 
     destroyBubble: function(bubble){
     this.bubbles.children.map((bubble)=>bubble.destroy());
-        console.log("done")
     },
 
 
@@ -238,7 +226,11 @@ AcquaRush.Game = {
     getDistance: function(){
         this.currentDistance = this.currentDistance + (game.scores.energy / 10);
         game.scores.distance = Math.round(this.currentDistance);
-        console.log(this.distance,"asdasd")
+    },
+    
+    getSharkFrequency: function(){
+        return 900 - this.game.time.totalElapsedSeconds() * 3;
+        
     },
 
     
@@ -261,7 +253,7 @@ AcquaRush.Game = {
         if(!pufferSprite.HasEaten){     
         game.scores.energy = Math.round(game.scores.energy / 0.5); 
         pufferSprite.HasEaten = true;
- 
+
     }},
         
 
@@ -300,6 +292,14 @@ AcquaRush.Game = {
         this.bubbles.children.map((bubble)=>bubble.body.gravity.y = -100);
         this.bubbleStars.children.map((bubbleStar)=>bubbleStar.body.gravity.y = -80)}
         },
+    
+    addsOverlap: function(){
+    game.physics.arcade.overlap(this.bubbles, this.fish, this.getBubble, null, this);
+        game.physics.arcade.overlap(this.bubbleStars, this.fish, this.getBubbleStar, null, this);               game.physics.arcade.overlap(this.lifes, this.fish, this.getLife, null, this);
+        game.physics.arcade.overlap(this.sharks, this.fish, this.sharksGetBird, null, this);               game.physics.arcade.overlap(this.octopuss, this.fish, this.octoGetBird, null, this);
+        game.physics.arcade.overlap(this.puffers, this.fish, this.pufferGetBird, null, this);
+    },
+    
      render:function() {
          //game.debug.text('Elapsed seconds: ' + this.game.time.totalElapsedSeconds(), 32, 32);
         // game.debug.body(this.fish);
