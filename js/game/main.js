@@ -2,13 +2,8 @@
 let height = window.innerHeight / 1.2;
 
 let width = window.innerWidth / 1.2;
-
-if (!this.desktop){
 var game = new Phaser.Game(width,height);
-}else{
-var game = new Phaser.Game(window.screen.availWidth * window.devicePixelRatio, window.screen.availHeight * window.devicePixelRatio, Phaser.CANVAS, 'game');
 
-} 
 
 
 
