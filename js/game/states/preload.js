@@ -40,6 +40,9 @@ AcquaRush.PreLoad = {
     if(this.ready === true) {
       this.state.start('Menu');
     }
+        this.game.scale.pageAlignHorizontally = true;
+        this.game.scale.pageAlignVertically = true;
+        this.game.scale.refresh();
         },
     onLoadComplete: function() {
     this.ready = true;

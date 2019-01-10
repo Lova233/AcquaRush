@@ -161,7 +161,7 @@ AcquaRush.Game = {
         if (this.game.time.totalElapsedSeconds() <+ 30) return;
         let maxMinGravity = Math.random() * 20 - 10; 
         x = this.game.width + 100;
-        y = Math.random()*450;
+        y = this.game.height - (200 * Math.floor(Math.random() * 3));
         let puffSprite = game.add.sprite(x, y, 'puffer');
         puffSprite.scale.setTo(0.7,0.7);
         game.physics.arcade.enableBody(puffSprite);
