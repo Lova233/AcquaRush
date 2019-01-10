@@ -64,12 +64,14 @@ startNormal: function(){
         this.state.start('Game');
 },
 startHard: function(){
+      game.scale.startFullScreen(false);
         game.time.reset();
         this.resetGame()
         game.scores.difficulty = 1.3;
         this.state.start('Game');
 },
 startInsane: function(){
+        game.scale.startFullScreen(false);
         game.time.reset();
         game.scores.difficulty = 2
 

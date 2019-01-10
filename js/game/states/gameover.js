@@ -24,6 +24,7 @@ AcquaRush.GameOver = {
 
 },
         newGame: function(){
+            game.scale.startFullScreen(false);
         game.time.reset();
         this.resetGame();
         this.state.start('Game');
