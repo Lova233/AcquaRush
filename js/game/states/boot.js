@@ -4,7 +4,7 @@ AcquaRush.Boot = {
 		game.load.image('background', 'assets/back2.jpg');
 	},
 	create: function() {
-      game.scale.fullScreenScaleMode = Phaser.ScaleManager.NO_SCALE;
+      game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
 		this.state.start('PreLoad');
 	}
 };
