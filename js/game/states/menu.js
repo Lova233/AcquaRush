@@ -7,9 +7,6 @@ AcquaRush.Menu = {
             energy: 30,
             difficulty:1,
         }
-        
-
-        console.log("menuee")
         let style = { font: "2rem Roboto", fill: "#FFFFFF", align: "center" };
         this.background = game.add.tileSprite(0, 0, game.width, game.height - 1, 'background');
         this.background.autoScroll(-30, -0);
@@ -41,8 +38,9 @@ AcquaRush.Menu = {
         let puff = puffer.animations.add('puff');
         puffer.animations.play('puff',8,true);
        
-        
-        
+        this.under = game.add.audio('under',1,true); 
+        this.under.play();
+
         
         
 
@@ -59,20 +57,17 @@ startNormal: function(){
         game.time.reset();
         this.resetGame()
         game.scores.difficulty = 0.9;
-//        game.scale.startFullScreen(false);
         this.state.start('Game');
 },
 startHard: function(){
         game.time.reset();
         this.resetGame()
         game.scores.difficulty = 1.3;
-  //      game.scale.startFullScreen(false);
         this.state.start('Game');
 },
 startInsane: function(){
         game.time.reset();
         game.scores.difficulty = 2
-    //    game.scale.startFullScreen(false);
         this.state.start('Game');
 },
     
