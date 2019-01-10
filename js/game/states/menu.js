@@ -11,10 +11,6 @@ AcquaRush.Menu = {
         this.background = game.add.tileSprite(0, 0, game.width, game.height - 1, 'background');
         this.background.autoScroll(-30, -0);
         this.title = game.add.sprite(this.game.width / 2 - 370, 60, 'title').scale.setTo(0.4, 0.4);
-        //this.option = game.add.sprite(670, 260, 'option');
-	    //game.add.tween(this.option).from( { y: -200 }, 2000, Phaser.Easing.Bounce.Out, true);
-        //this.new = game.add.sprite(370, 260, 'new');
-        //game.add.tween(this.new).from( { y: -200 }, 2000, Phaser.Easing.Bounce.Out, true);   
         this.normal = game.add.sprite(game.width / 2 - 200, 260, 'normal');
         game.add.tween(this.normal).from( { y: -200 }, 2000, Phaser.Easing.Bounce.Out, true);   
         this.hard = game.add.sprite(game.width / 2 - 50, 260, 'hard');
