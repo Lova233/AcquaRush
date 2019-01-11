@@ -25,12 +25,10 @@ AcquaRush.PreLoad = {
         game.load.audio('boing','assets/sounds/boing.wav');
         game.load.audio('fail','assets/sounds/fail.wav');
             
-        //if (this.game.device.desktop && !this.game.device.firefox)
-        game.load.spritesheet('sharkSprite', 'assets/sharkSprite.png', 422, 150, 10);  
-
-            
-        //else
-        //game.load.spritesheet('sharkSprite', 'assets/sharkSpriteSmall.png', 202, 79, 10);   
+        if (this.game.device.desktop && !this.game.device.firefox)
+        game.load.spritesheet('sharkSprite', 'assets/sharkSprite.png', 422, 150, 10);      
+        else
+        game.load.spritesheet('sharkSprite', 'assets/sharkSpriteSmall.png', 200, 79, 10);   
         this.load.onLoadComplete.add(this.onLoadComplete, this);            
         
 
